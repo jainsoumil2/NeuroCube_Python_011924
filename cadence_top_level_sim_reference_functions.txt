@@ -1,0 +1,114 @@
+def clear_all_int_dacs(dev, neurodynSel):
+    disable = 0
+    offData = 0
+    sign = 0
+
+    for quadrant in range(4):
+        for ifSynapse in range(2):
+            for channelNum in range(3):
+                for typ in range(4):
+                    for bumpNum in range(7):
+                        write_int_dac_long(dev, neurodynSel, quadrant, ifSynapse, channelNum, typ, bumpNum, disable,
+                                           sign, offData)
+                        #print('neurodyn= ' + str(target_neurodyn) + 'quadrant= ' + str(quadrant) + ', ifSynapse= ' + str(
+                        #    ifSynapse) + ', channelNum= ' + str(channelNum) + ', typ= ' + str(
+                        #    typ) + ', bumNum= ' + str(bumpNum) + ' dacs cleared')
+						
+
+def write_int_dac_long(dev, neurodyn, quadrant, ifSynapse, channelNum, typ, bumpNum, enable, sign, data):
+    """
+    From matlab function OLD:
+    writes internal NeuroDyn dac with long address
+    addr = 10 bit address
+    data = 10 bit data
+    """
+    
+    addr = (quadrant << 8) + (ifSynapse << 7) + (channelNum << 5) + (typ << 3) + bumpNum
+    write_int_dac(dev, neurodyn, addr, enable, sign, data)
+	
+	
+def write_int_dac(dev, neurodyn, addr, enable, sign, data):
+    """
+    From matlab function OLD:
+    writes internal NeuroDyn dac
+
+    addr = 10 bit address
+    data = 10 bit data
+
+    dataMSB is stored in bits 7-4
+    """
+
+    # command = 98
+    # IFMASK = (1<<4)+(1<<3)
+
+    ifVoltage = bitcheck(addr, 6) == 1 and bitcheck(addr,
+                                                    7) == 1  # bitcheck(d,b) returns (d >> (10 - b)) & 1; bitwise AND of d(first 10-b bits discarded) and 0b0...001; basically, bitcheck(addr, 6) checks whether addr4/a4 = 1 and bitcheck(addr, 7) checks whether addr3/a3 = 1; basically if the 'typ' bits are 1
+    # addrMSB = addr >> 8                                                         # discard the first 8 bits, addr0...addr7/a0...a7; addrMSB = addr9 addr8/ a9 a8
+    # addrLSB = addr & (2 ** 8 - 1)                                               # bitwise operation AND with (2 ** 8 - 1 = 255 = 0b1111 1111); basically the first 8 address bits, addr0...addr7/ a0...a7
+
+    if ifVoltage:
+        dataMSB = (sign << 2) + (data >> 8)
+    else:
+        dataMSB = (sign << 3) + (enable << 2) + (data >> 8)
+
+    dataLSB = data & (
+                2 ** 8 - 1)  # bitwise operation AND with (2 ** 8 - 1 = 255 = 0b1111 1111); basically the first 8 data bits, data0...data7/ d0...d7
+
+    data = dataLSB + (dataMSB << 8)
+
+    set_internal_dacs_address(dev, addr, neurodyn)
+    set_internal_dacs_data(dev, data)
+    set_WR_off(dev)
+    set_WR_on(dev, neurodyn)
+    set_WR_off(dev)
+    
+	
+def bitcheck(d, b):
+    return (d >> (10 - b)) & 1
+	
+
+def set_internal_dacs_data(dev, data):
+    # set neurodyn internal dacs data (d0 - d11)
+
+    dev.xem.SetWireInValue(0x18, int(data), 0xffffffff)
+    dev.xem.UpdateWireIns()
+    #print('Neurodyn internal dacs data updated to ' + str(bin(data)))
+	
+	
+def set_internal_dacs_address(dev, address, neurodynSel):
+    # set neurodyn internal dacs address (a0 - a9)
+
+    if neurodynSel == 0:                                   # neurodyn 1
+        dev.xem.SetWireInValue(0x17, address, 0xffffffff)
+        dev.xem.UpdateWireIns()
+        #print('Neurodyn 1 internal dacs address updated to ' + str(bin(address)))     
+    
+    elif neurodynSel == 1:                                 # neurodyn 2
+        LSB = address % (2 ** 8)
+        MSB = address - LSB
+        MSB_shift_left_2bits = MSB << 2
+        address_mod = MSB_shift_left_2bits + LSB
+
+        dev.xem.SetWireInValue(0x17, address_mod, 0xffffffff)
+        dev.xem.UpdateWireIns()
+        #print('Neurodyn 2 internal dacs address updated to ' + str(bin(address)))
+    
+    elif neurodynSel == 2:                                 # neurodyn 3
+        LSB = address % (2 ** 8)
+        MSB = address - LSB
+        MSB_shift_left_4bits = MSB << 4
+        address_mod = MSB_shift_left_4bits + LSB
+
+        dev.xem.SetWireInValue(0x17, address_mod, 0xffffffff)
+        dev.xem.UpdateWireIns()
+        #print('Neurodyn 3 internal dacs address updated to ' + str(bin(address)))
+    
+    elif neurodynSel == 3:                                 # neurodyn 4
+        LSB = address % (2 ** 8)
+        MSB = address - LSB
+        MSB_shift_left_6bits = MSB << 6
+        address_mod = MSB_shift_left_6bits + LSB
+
+        dev.xem.SetWireInValue(0x17, address_mod, 0xffffffff)
+        dev.xem.UpdateWireIns()
+        #print('Neurodyn 4 internal dacs address updated to ' + str(bin(address)))

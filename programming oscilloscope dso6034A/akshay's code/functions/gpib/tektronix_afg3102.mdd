@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MATLABInstrumentDriver>
+   <FileVersion>2.42</FileVersion>
+   <DriverName>C:\Documents and Settings\ddaly\Desktop\instrument_drivers\awg710.mdd</DriverName>
+   <DriverType>MATLAB interface object</DriverType>
+   <InstrumentType>Function Generator</InstrumentType>
+   <InstrumentManufacturer>Tektronix</InstrumentManufacturer>
+   <InstrumentModel>AWG710</InstrumentModel>
+   <InstrumentVersion>1.0</InstrumentVersion>
+   <Identify>*IDN?</Identify>
+   <Reset>*RST</Reset>
+   <Selftest>*TST?</Selftest>
+   <Error>System:Error?</Error>
+   <CreateInitCode>
+      <Code>function init(obj)
+% This function is called after the object is created.
+% OBJ is the device object.
+% End of function definition - DO NOT EDIT
+</Code>
+   </CreateInitCode>
+   <ConnectInitCode>
+      <Type>InstrumentCommand</Type>
+   </ConnectInitCode>
+   <CleanupCode>
+      <Type>InstrumentCommand</Type>
+   </CleanupCode>
+   <GroupInfo>
+      <Group>
+         <Name>parent</Name>
+         <Description/>
+         <Command/>
+         <Size>1</Size>
+         <Mappings>
+            <ChannelMap Command="parent1" Index="1"/>
+         </Mappings>
+         <PropertyInfo>
+            <Property>
+               <Name>DataPoints</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>DATA:POINts EMEMory,</ConfigureCommand>
+                     <QueryCommand>DATA:POINts? EMEMory</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>bounded</Constraint>
+                  <ConstraintValue>
+                     <Range Max="131072.0" Min="2.0"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>1000</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj,'DataPoints',1000)
+
+This property sets the length of the EMEMory register.</Description>
+            </Property>
+            <Property>
+               <Name>FunctionGenerator1EFile</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>SOURce1:FUNCtion:EFILe </ConfigureCommand>
+                     <QueryCommand>SOURce1:FUNCtion:EFILe?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>"/file.tfw"</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'FunctionGenerator1EFile', frequency)
+
+This property sets the "EFile" for the AWG output.  This corresponds to a file path on the USB thumb drive.  The file must be of .tfw type.  In addition, the Shape of the AWG output must be set to "EFILe" before this command is executed.</Description>
+            </Property>
+            <Property>
+               <Name>FunctionGenerator1Frequency</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>SOURce1:FREQ </ConfigureCommand>
+                     <QueryCommand>SOURce1:FREQ?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>1kHz</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'FunctionGenerator1Frequency', frequency) adjusts the frequency of the function waveform.  The input should be text with the appropriate "MHz", "kHz" etc. immediately after the number with no spaces.</Description>
+            </Property>
+            <Property>
+               <Name>FunctionGenerator1Phase</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>SOURce1:PHASe </ConfigureCommand>
+                     <QueryCommand>SOURce1:PHASe?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>bounded</Constraint>
+                  <ConstraintValue>
+                     <Range Max="3.2" Min="-3.2"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'FunctionGenerator1Phase',volt_pkpk) sets a phase of the function generator.  The input should be a double in units of rads.
+
+i.e. Input 3.141592 for 180 degrees</Description>
+            </Property>
+            <Property>
+               <Name>FunctionGenerator1Shape</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>SOURce1:FUNCtion:SHAPe </ConfigureCommand>
+                     <QueryCommand>SOURce1:FUNCtion:SHAPe?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="SINusoid" Value="SINusoid"/>
+                     <Enum Name="SQUare" Value="SQUare"/>
+                     <Enum Name="RAMP" Value="RAMP"/>
+                     <Enum Name="PULSe" Value="PULSe"/>
+                     <Enum Name="DC" Value="DC"/>
+                     <Enum Name="PRNoise" Value="PRNoise"/>
+                     <Enum Name="SINC" Value="SINC"/>
+                     <Enum Name="GAUSsian" Value="GAUSsian"/>
+                     <Enum Name="LORentz" Value="LORentz"/>
+                     <Enum Name="ERISe" Value="ERISe"/>
+                     <Enum Name="USER1" Value="USER1"/>
+                     <Enum Name="USER2" Value="USER2"/>
+                     <Enum Name="USER3" Value="USER3"/>
+                     <Enum Name="USER4" Value="USER4"/>
+                     <Enum Name="EFILe" Value="EFILe"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>SINusoid</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'FunctionGenerator1Shape', shape) sets a standard function waveform.  The inputs should be one of:
+
+SINusoid
+SQUare
+RAMP
+PULSe
+DC
+etc.
+
+At *RST, this value is set to SINusoid</Description>
+            </Property>
+            <Property>
+               <Name>FunctionGenerator1VoltAmp</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>SOURce1:VOLTage:AMPL </ConfigureCommand>
+                     <QueryCommand>SOURce1:VOLTage:AMPL?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>bounded</Constraint>
+                  <ConstraintValue>
+                     <Range Max="1.0" Min="0.02"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>0.1</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'FunctionGenerator1VoltAmp',volt_pkpk) sets a peak-to-peak amplitude of the function generator.  The input should be a double in units of Volts.</Description>
+            </Property>
+            <Property>
+               <Name>FunctionGenerator1VoltOffset</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>:SOURce1:VOLTage:OFFset </ConfigureCommand>
+                     <QueryCommand>:SOURce1:VOLTage:OFFset?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>bounded</Constraint>
+                  <ConstraintValue>
+                     <Range Max="5.0" Min="-5.0"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'FunctionGenerator1VoltOffset', volt) sets the offset voltage of the function generator.  The input should be a double in units of Volts.</Description>
+            </Property>
+            <Property>
+               <Name>FunctionGenerator2EFile</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>SOURce2:FUNCtion:EFILe </ConfigureCommand>
+                     <QueryCommand>SOURce2:FUNCtion:EFILe?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>"/file.tfw"</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'FunctionGenerator1EFile', frequency)
+
+This property sets the "EFile" for the AWG output.  This corresponds to a file path on the USB thumb drive.  The file must be of .tfw type.  In addition, the Shape of the AWG output must be set to "EFILe" before this command is executed.</Description>
+            </Property>
+            <Property>
+               <Name>FunctionGenerator2Frequency</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>SOURce2:FREQ </ConfigureCommand>
+                     <QueryCommand>SOURce2:FREQ?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>none</Constraint>
+               </PermissibleType>
+               <DefaultValue>1kHz</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'FunctionGenerator1Frequency', frequency) adjusts the frequency of the function waveform.  The input should be text with the appropriate "MHz", "kHz" etc. immediately after the number with no spaces.</Description>
+            </Property>
+            <Property>
+               <Name>FunctionGenerator2Phase</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>SOURce2:PHASe </ConfigureCommand>
+                     <QueryCommand>SOURce2:PHASe?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>bounded</Constraint>
+                  <ConstraintValue>
+                     <Range Max="3.2" Min="-3.2"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'FunctionGenerator2Phase',volt_pkpk) sets a phase of the function generator.  The input should be a double in units of rads.
+
+i.e. Input 3.141592 for 180 degrees</Description>
+            </Property>
+            <Property>
+               <Name>FunctionGenerator2Shape</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>SOURce2:FUNCtion:SHAPe </ConfigureCommand>
+                     <QueryCommand>SOURce2:FUNCtion:SHAPe?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="SINusoid" Value="SINusoid"/>
+                     <Enum Name="SQUare" Value="SQUare"/>
+                     <Enum Name="RAMP" Value="RAMP"/>
+                     <Enum Name="PULSe" Value="PULSe"/>
+                     <Enum Name="DC" Value="DC"/>
+                     <Enum Name="PRNoise" Value="PRNoise"/>
+                     <Enum Name="SINC" Value="SINC"/>
+                     <Enum Name="GAUSsian" Value="GAUSsian"/>
+                     <Enum Name="LORentz" Value="LORentz"/>
+                     <Enum Name="ERISe" Value="ERISe"/>
+                     <Enum Name="USER1" Value="USER1"/>
+                     <Enum Name="USER2" Value="USER2"/>
+                     <Enum Name="USER3" Value="USER3"/>
+                     <Enum Name="USER4" Value="USER4"/>
+                     <Enum Name="EFILe" Value="EFILe"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>SINusoid</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'FunctionGenerator2Shape', shape) sets a standard function waveform.  The inputs should be one of:
+
+SINusoid
+SQUare
+RAMP
+PULSe
+DC
+etc.
+
+At *RST, this value is set to SINusoid</Description>
+            </Property>
+            <Property>
+               <Name>FunctionGenerator2VoltAmp</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>SOURce2:VOLTage:AMPL </ConfigureCommand>
+                     <QueryCommand>SOURce2:VOLTage:AMPL?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>bounded</Constraint>
+                  <ConstraintValue>
+                     <Range Max="1.0" Min="0.02"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>0.1</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'FunctionGenerator1VoltAmp',volt_pkpk) sets a peak-to-peak amplitude of the function generator.  The input should be a double in units of Volts.</Description>
+            </Property>
+            <Property>
+               <Name>FunctionGenerator2VoltOffset1</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>:SOURce2:VOLTage:OFFset </ConfigureCommand>
+                     <QueryCommand>:SOURce2:VOLTage:OFFset?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>bounded</Constraint>
+                  <ConstraintValue>
+                     <Range Max="5.0" Min="-5.0"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'FunctionGenerator1VoltOffset', volt) sets the offset voltage of the function generator.  The input should be a double in units of Volts.</Description>
+            </Property>
+            <Property>
+               <Name>FunctionGeneratorState</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>:AWGControl:FG:STATe </ConfigureCommand>
+                     <QueryCommand>:AWGControl:FG:STATe?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Value>1.0</Value>
+                     <Value>0.0</Value>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'FunctionGeneratorState', boolean) enables or disables the function generator mode.  This also causes the "RUN" button to be enabled but does not cause the outputs to be enabled.
+
+boolean should be 1 or 0.</Description>
+            </Property>
+            <Property>
+               <Name>Output1State</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>:OUTPut1:STATE </ConfigureCommand>
+                     <QueryCommand>:OUTPut1:STATE?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Value>0.0</Value>
+                     <Value>1.0</Value>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'Output1State',boolean) enables or disables the output.  boolean should be a double of 1 or 0.
+
+Output2State() is a similar function that enables or disables the second output.</Description>
+            </Property>
+            <Property>
+               <Name>Output2State</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>:OUTPut2:STATE </ConfigureCommand>
+                     <QueryCommand>:OUTPut2:STATE?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>Double</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Value>0.0</Value>
+                     <Value>1.0</Value>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>0</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'Output2State',boolean) enables or disables the second output.  boolean should be a double of 1 or 0.
+
+OutputState() is a similar function that enables or disables the first output.</Description>
+            </Property>
+            <Property>
+               <Name>ReferenceOscillator</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <ConfigureCommand>:SOURce:ROSCillator:SOURce </ConfigureCommand>
+                     <QueryCommand>:SOURce:ROSCillator:SOURce?</QueryCommand>
+                  </Commands>
+               </Code>
+               <PermissibleType>
+                  <Type>String</Type>
+                  <Constraint>enum</Constraint>
+                  <ConstraintValue>
+                     <Enum Name="INT" Value="INT"/>
+                     <Enum Name="EXT" Value="EXT"/>
+                  </ConstraintValue>
+               </PermissibleType>
+               <DefaultValue>INT</DefaultValue>
+               <ReadOnly>never</ReadOnly>
+               <Description>set(obj, 'ReferenceOscillator', string) configures
+the AWG for internal (INT) or external (EXT) 10 MHz reference control.
+</Description>
+            </Property>
+         </PropertyInfo>
+         <MethodInfo>
+            <Method>
+               <Name>AlignPhase</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <Line Command="SOURce:PHASe:INITiate" Output="false"/>
+                  </Commands>
+               </Code>
+               <Description>invoke(obj,'AlignPhase')
+
+This function aligns the phases of the two outputs.  This is very important to do after changing the frequency!</Description>
+            </Method>
+            <Method>
+               <Name>SetData</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <Line Command="DATA:VALue &lt;string&gt;" Output="false"/>
+                     <Input>string</Input>
+                  </Commands>
+               </Code>
+               <Description>invoke(obj,'SetData',string)</Description>
+            </Method>
+            <Method>
+               <Name>SetDataLine</Name>
+               <Location>parent</Location>
+               <CapabilityGroup>Base</CapabilityGroup>
+               <Type>InstrumentCommand</Type>
+               <Code>
+                  <Commands>
+                     <Line Command="DATA:LINE &lt;string&gt;" Output="false"/>
+                     <Input>string</Input>
+                  </Commands>
+               </Code>
+               <Description>invoke(obj,'SetDataLine',string)</Description>
+            </Method>
+         </MethodInfo>
+      </Group>
+   </GroupInfo>
+</MATLABInstrumentDriver>

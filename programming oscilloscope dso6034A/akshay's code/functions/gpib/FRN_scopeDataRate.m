@@ -1,0 +1,31 @@
+function dataRate = FRN_scopeDataRate(scope);
+% gets datarate for fernie chip
+
+[w4, t] = invoke(scope.dev.waveform, 'readwaveform', scope.channel);
+
+env = sqrt(real(hilbert(w4)).^2+imag(hilbert(w4)).^2);
+env_avg = mean(env);
+
+rising_edge = 1;
+n=1;
+for i=1:length(env)
+    if(rising_edge && env(i)>env_avg)
+        rising_edge = 0;
+        crs(n) = i; %crs stands for crossing
+        n=n+1;
+    elseif (~rising_edge && env(i)<env_avg)
+        rising_edge = 1;
+        crs(n) = i;
+        n=n+1;
+    end
+end
+
+crs(crs<100) = [];
+crs(end) = [];
+
+dataRate = 1/mean(diff(t(crs)));
+
+
+
+
+

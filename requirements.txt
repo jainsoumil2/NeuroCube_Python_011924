@@ -1,0 +1,16 @@
+# Python Requirements
+pyvisa
+pyserial
+tables
+pandas
+yapf (for code formatting with sublime text using 'ctrl'+'alt'+'f')
+
+# FrontPanelSDK Installation
+For installing FrontPanelSDK files, perhaps the simplest way is to copy-paste the following files into the repo directory:
+API/libokFrontPanel.dylib
+API/okFrontPanel.h
+API/okFrontPanelDLL.h
+API/okimpl_fpoip.bundle
+API/Python3/_ok.so
+API/Python3/ok.py
+(Perhaps these would only need to change between OS and Python versions)
